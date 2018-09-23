@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <section id="about">
+      <div class="container-custom">
+        <h3>Employees To Projects</h3>
+        <hr size="10" width="">
+        <div class="row">
+          <div class="col-md-9"></div>
+          {% if session['superadmin'] %}
+          <div style="padding-bottom:2%" class="col-md-offset-9 col-md-3"><div style="display:inline"><div style="display:inline;padding-left:22%"><a href="/projecttoemp"><span title="Project to employee view" class="glyphicon glyphicon-th-list custom-glyphicon-size col-sm-1"></span></a></div> <div style="display:inline;padding-left:6%"><a href="/projectempall"><span title="All project to employee view" class="glyphicon glyphicon-th-large custom-glyphicon-size col-sm-1"></span></a></div></div><div class="float-right" style=""><a href="/showprojectempform" class="btn btn-primary">Assign Project</a></div></div>
+          {% endif %}
+          <div class="col-md-12">
+          {% for row1 in results %}
+            <button class="accordion"><strong>{{row1['name']}} ( {{row1['email']}} )</strong></button>
+          <div class="panel">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>Is Active</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if row1['payload'] %}
+                    {% for project in row1['payload'] %}
+                    <tr>
+                        <td>{{project[2]}} ( {{project[7]}} )</td>
+                        <td>{{project[4]}}</td>
+                        <td>{{project[5]}}</td>
+                        <td>{{project[6]}}</td>
+                        <td style="">{% if session['superadmin'] %}<a title="Edit" href={{ url_for('__name__.editprojectemp', epe_id= project[0]) }}><span class="glyphicon glyphicon-edit"></span></a>&nbsp&nbsp&nbsp<a data-toggle="confirmation" data-btn-ok-label="&nbsp&nbspOk&nbsp&nbsp" data-btn-ok-class="btn-primary" data-btn-cancel-label="Cancel" data-btn-cancel-class="btn" data-title="Are you sure?" href={{ url_for('__name__.deleteempproject', ep_id= project[0]) }}><span class="glyphicon glyphicon-trash"></span></a>{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                        <tr><td style="text-align:center" colspan="5">Project not assigned to <strong>{{row1['name']}} ( {{row1['email']}} )</strong> yet.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+          </div>
+          {% endfor %}
+        </div>
+        </div>
+      </div>
+    </section>
+<script>
+$('[data-toggle=confirmation]').confirmation({
+  rootSelector: '[data-toggle=confirmation]',
+// other options
+});
+</script>
+{% endblock %}

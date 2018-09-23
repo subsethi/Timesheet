@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section id="about">
+      <div class="container">
+        {% if resultid %}
+         <h3>Edit Assign Project to Employee ( {{resultse[0]}} )</h3>
+        {% else %}
+        <h3>Assign Project to Employee</h3>
+        {% endif %}
+        <hr size="10" width="">
+        <form class="form-horizontal" method="post" action="/saveprojectemp">
+          <input type="hidden" name="emppro_id" value="{{resultid[0]}}" />
+          <div class="row">
+          <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="epname">Employee Name and Email:</label>
+            <div class="col-sm-12">
+              <select id="epname" name="epname" {% if resultid[0] %}disabled=true {% endif %} class="form-control">
+                  {% if resultid %}
+                  <option  value="{{resultse[0]}},{{resultse[1]}}">{{resultse[0]}} ( {{resultse[1]}} )</option>
+                  {% else %}
+                  {% for row in resultse %}
+                  <option  value="{{row[1]}},{{row[8]}}">{{row[1]}} ( {{row[8]}} )</option>
+                  {% endfor %}
+                  {% endif %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="epemail">Employee Email:</label>
+            <div class="col-sm-12">
+              <select id="epemail" name="epemail" class="form-control">
+                  <option {%if resultse[4] == 'SA' %} selected {% endif %} value="SA">Super Admin</option>
+              </select>
+            </div>
+          </div>
+        </div>-->
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="eproject">Project Name:</label>
+              <div class="col-sm-12">
+                <select id="eproject" name="eproject" {% if resultid[0] %}disabled=true {% endif %} class="form-control">
+                  {% if resultid %}
+                  <option value="{{resultsp[0]}},{{resultsp[1]}}">{{resultsp[0]}} ( {{resultsp[1]}} )</option>
+                  {% else %}
+                  {% for row in resultsp %}
+                  <option  value="{{row[2]}},{{row[1]}}">{{row[2]}} ( {{row[1]}} )</option>
+                  {% endfor %}
+                  {% endif %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="epstatus">Is Active:</label>
+              <div class="col-sm-12">
+                <select id="epstatus" name="epstatus" class="form-control">
+                    {% if resultid %}
+                    <option {%if resultsp[2] == 'Yes' %} selected {% endif %} value="Yes">Yes</option>
+                    <option {%if resultsp[2] == 'No' %} selected {% endif %} value="No">No</option>
+                    {% else %}
+                    <option  value="Yes">Yes</option>
+                    <option  value="No">No</option>
+                    {% endif %}
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+      <div class="col-sm-3">
+      <div class="form-group">
+        <label class="control-label col-sm-8" for="epsdate">Start Date:</label>
+        <div class="col-sm-12">
+          <input type="date" class="form-control" id="epsdate" placeholder="" name="epsdate" {%if resultid[0] %} value="{{resultsp[3]}}" {% endif %} required>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label class="control-label col-sm-8" for="epedate">End Date:</label>
+        <div class="col-sm-12">
+          <input type="date" class="form-control" id="epedate" placeholder="" name="epedate"  {%if resultid[0] %} value="{{resultsp[4]}}" {% endif %} >
+        </div>
+      </div>
+    </div>
+    <!--<div class="col-sm-3">
+        <div class="form-group">
+          <label class="control-label col-sm-8" for="eproject">Project Name:</label>
+          <div class="col-sm-12">
+            <select id="eproject" name="eproject" class="form-control">
+                <option {%if resultse[4] == 'SA' %} selected {% endif %} value="SA">Super Admin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label class="control-label col-sm-8" for="epstatus">Is Active:</label>
+          <div class="col-sm-12">
+            <select id="epstatus" name="epstatus" class="form-control">
+                <option {%if resultse[5] == 'Yes' %} selected {% endif %} value="Yes">Yes</option>
+                <option {%if resultse[5] == 'No' %} selected {% endif %} value="No">No</option>
+
+            </select>
+          </div>
+        </div>
+      </div>-->
+  </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+{% endblock %}

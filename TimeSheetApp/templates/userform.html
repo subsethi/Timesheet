@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section id="about">
+      <div class="container">
+        <h3>Edit User ({{result[1]}})</h3>
+        <hr size="10" width="">
+        <form class="form-horizontal" method="post" action="/saveuser">
+          <input type="hidden" name="user_id" value="{{result[0]}}" />
+          <div class="row">
+          <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="uname">User Name:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="uname" placeholder="Enter User Name" name="uname" value="{{result[1]}}" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="uemail">User Email:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="uemail" placeholder="Enter User email" name="uemail" value="{{result[2]}}" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="utype">User Type:</label>
+              <div class="col-sm-12">
+                <select id="utype" name="utype" class="form-control">
+                    <option {%if result[4] == 'SA' %} selected {% endif %} value="SA">Super Admin</option>
+                    <option {%if result[4] == 'A' %} selected {% endif %} value="A">Admin</option>
+                    <option {%if result[4] == 'U' %} selected {% endif %} value="U">User</option>
+
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="ustatus">Is Active:</label>
+              <div class="col-sm-12">
+                <select id="ustatus" name="ustatus" class="form-control">
+                    <option {%if result[5] == 'Yes' %} selected {% endif %} value="Yes">Yes</option>
+                    <option {%if result[5] == 'No' %} selected {% endif %} value="No">No</option>
+
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+{% endblock %}

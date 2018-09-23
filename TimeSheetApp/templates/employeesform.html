@@ -1,0 +1,312 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section id="about">
+      <div class="container">
+        {% if result[0] %}
+        {% if session['user'] %}
+        <h3>Profile Details</h3>
+        {% else %}
+        <h3>Edit Employee ({{result[1]}})</h3>
+        {% endif %}
+        {% else %}
+        <h3>Add Employee</h3>
+        {% endif %}
+        <hr size="10" width="97%" noshade>
+        <form class="form-horizontal" method="post" action="/saveemployee">
+          <input type="hidden" name="emp_id" value="{{result[0]}}" />
+          <div style="text-align:center;">
+          <h4>Personal Details</h4>
+          </div>
+          <hr size="10" width="97%" noshade>
+          <input type="hidden" name="project_id" value="{{result[0]}}" />
+          <div class="row">
+          <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="ename">Name:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="ename" placeholder="Enter Name" name="ename" {% if view %}readonly{% endif %} {% if result[0] %}value="{{result[1]}}"{% endif %} required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="phone1">Contact Number:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="phone1" placeholder="Enter Phone Number" name="phone1" {% if view %}readonly{% endif %} {% if result[0] %}value="{{result[2]}}"{% endif %} required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-10" for="phone2">Alternate Contact No:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" id="phone2" placeholder="Enter Phone Number" name="phone2" {% if view %}readonly{% endif %} value="{{result[3]}}" >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="bgroup">Blood Group:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" id="bgroup" placeholder="Enter Blood Group" name="bgroup" {% if view %}readonly{% endif %} value="{{result[4]}}" >
+              </div>
+            </div>
+          </div>
+      </div>
+        <div class="row">
+        <div class="col-sm-3">
+        <div class="form-group">
+          <label class="control-label col-sm-8" for="pcno">Parent Contact No:</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" id="pcno" placeholder="Enter Phone Number" name="pcno" {% if view %}readonly{% endif %} value="{{result[6]}}" >
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label class="control-label col-sm-8" for="gender">Gender:</label>
+          <div class="col-sm-12">
+            <select id="gender" name="gender" class="form-control" {% if view %}disabled=true {% endif %}>
+                <option {%if result[7] == 'Male' %} selected {% endif %} value="Male">Male</option>
+                <option {%if result[7] == 'Female' %} selected {% endif %} value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-10" for="edob">Date Of Birth:</label>
+            <div class="col-sm-12">
+              <input type="date" class="form-control" id="edob" placeholder="" name="edob" {% if view %}readonly{% endif %} {% if result[0] %} value="{{result[9]}}"{% endif %} required>
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="bgroup">Blood Group:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="bgroup" placeholder="Enter Blood Group" name="bgroup" value="{{result[4]}}" >
+            </div>
+          </div>
+        </div>-->
+    </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label" for="address">Address:</label>
+          <div class="">
+            <textarea class="form-control" id="address" name="address" {% if view %}readonly{% endif %} rows="1" cols="250" required>{{result[5]}}</textarea>
+          </div>
+        </div>
+      </div>
+      {% if session['superadmin'] %}
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          {% if view %}
+          <a class="btn btn-primary" href={{ url_for('__name__.editemp', e_id= result[0]) }}>&nbsp&nbspEdit&nbsp&nbsp</a>
+          {% else %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      <hr size="10" width="97%" noshade>
+      <div style="text-align:center;">
+      <h4>Official Details</h4>
+      </div>
+      <hr size="10"width="97%" noshade>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="progress">Official Email:</label>
+            <div class="col-sm-12">
+              <input type="email" class="form-control" id="oemail" placeholder="Enter Official Email" name="oemail" {% if view %}readonly{% endif %} {% if result[0] %}value="{{result[8]}}"{% endif %} required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="osdate">Start Date:</label>
+              <div class="col-sm-12">
+                <input type="date" class="form-control" id="osdate" placeholder="" name="osdate" {% if view %}readonly{% endif %} {% if result[0] %} value={{result[10]}} {% endif %} required>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="oedate">End Date:</label>
+              <div class="col-sm-12">
+                <input type="date" class="form-control" id="oedate" placeholder="" name="oedate" {% if view %}readonly{% endif %} value={{result[11]}} >
+              </div>
+            </div>
+          </div>
+        <!--<div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="pstatus">Status:</label>
+              <div class="col-sm-12">
+                <select id="pstatus" name="pstatus" class="form-control">
+                    <option {%if result[5] == 'Proposal' %} selected {% endif %} value="Proposal">Proposal</option>
+                    <option {%if result[5] == 'Not Started' %} selected {% endif %} value="Not Started">Not Started</option>
+                    <option {%if result[5] == 'Hold' %} selected {% endif %} value="Hold">Hold</option>
+                    <option {%if result[5] == 'Completed' %} selected {% endif %} value="Completed">Completed</option>
+                    <option {%if result[5] == 'Cancelled' %} selected {% endif %} value="Cancelled">Cancelled</option>
+                    <option {%if result[5] == 'Active' %} selected {% endif %} value="Active">Active</option>
+                </select>
+              </div>
+            </div>
+          </div>-->
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="oeisactive">Official Is Active:</label>
+              <div class="col-sm-12">
+                <select id="oeisactive" name="oeisactive" class="form-control" {% if view %}disabled=true {% endif %}>
+                    <option {%if result[12] == 'Yes' %} selected {% endif %} value="Yes">Yes</option>
+                    <option {%if result[12] == 'No' %} selected {% endif %} value="No">No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="oemptype">Permanent:</label>
+                <div class="col-sm-12">
+                  <select id="oemptype" name="oemptype" class="form-control" {% if view %}disabled=true {% endif %} required>
+                      <option {%if result[13] == 'Yes' %} selected {% endif %} value="Yes">Yes</option>
+                      <option {%if result[13] == 'No' %} selected {% endif %} value="No">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="ehra">HRA:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="ehra" placeholder="Enter HRA Value" step=0.01 name="ehra" {% if view %}readonly{% endif %} value="{{result[14]}}" >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="elta">LTA:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="elta" placeholder="Enter LTA Value" step=0.01 name="elta" {% if view %}readonly{% endif %} value="{{result[15]}}" >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="euallow">Uniform Allowance:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="euallow" placeholder="Enter Uniform Allowance" step=0.01 name="euallow" {% if view %}readonly{% endif %} value="{{result[16]}}" >
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-10" for="oeduallow">Education Allowance:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="oeduallow" placeholder="Enter Education Allowance" name="oeduallow" step=0.01 {% if view %}readonly{% endif %} value="{{result[17]}}" >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-10" for="oesfallow">Softfurnishing Allowance:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="oesfallow" placeholder="Enter Softfurnishing Allowance" step=0.01 name="oesfallow" {% if view %}readonly{% endif %} value="{{result[18]}}" >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="oeyears">Years:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="oeyears" placeholder="Enter Years" name="oeyears" {% if view %}readonly{% endif %} value="{{result[19]}}" >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="oedays">Days:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="oedays" placeholder="Enter Days" name="oedays" {% if view %}readonly{% endif %} value="{{result[21]}}" >
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="oefood">Food Coupon:</label>
+                <div class="col-sm-12">
+                  <select id="oefood" name="oefood" class="form-control" {% if view %}disabled=true{% endif %}>
+                      <option {%if result[20] == 'No' %} selected {% endif %} value="No" >No</option>
+                      <option {%if result[20] == 'Yes' %} selected {% endif %} value="Yes" >Yes</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="oevengno">Vichle Engno:</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="oevengno" placeholder="Enter Eng No" name="oevengno" {% if view %}readonly{% endif %} value="{{result[22]}}" >
+                </div>
+              </div>
+            </div>
+            <!--<div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="elta">LTA:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="elta" placeholder="Enter LTA Value" name="elta" value="{{result[10]}}" >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="euallow">Uniform Allowance:</label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" id="euallow" placeholder="Enter Uniform Allowance" name="euallow" value="{{result[10]}}" >
+                </div>
+              </div>
+            </div>-->
+      </div>
+      <!--<div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label" for="aboutp">About Project:</label>
+          <div class="">
+            <textarea class="form-control" id="aboutp" name="aboutp" rows="2" cols="250">
+             {{result[11]}}
+            </textarea>
+          </div>
+        </div>
+      </div>-->
+          <!--<div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+              </div>
+            </div>
+          </div>-->
+          <hr size="10" width="97%" noshade>
+          {% if session['superadmin'] %}
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="col-sm-offset-2 col-sm-10">
+                {% if view %}
+                <a class="btn btn-primary" href={{ url_for('__name__.editemp', e_id= result[0]) }}>&nbsp&nbspEdit&nbsp&nbsp</a>
+                {% else %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </form>
+      </div>
+    </section>
+{% endblock %}

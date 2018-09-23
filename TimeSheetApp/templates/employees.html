@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <section id="about">
+      <div class="container-custom">
+        <h3>All Employees</h3>
+        <hr size="10" width="">
+        <div class="row">
+          <div class="col-md-10"></div>
+          {% if session['superadmin'] %}
+          <div style="padding-bottom:2%" class="col-md-offset-10 col-md-2"><div class="float-right" style="float:right"><a href="/showempform" class="btn btn-primary">Add Employee</a></div></div>
+          {% endif %}
+          <div class="col-md-12">
+          <table id="table_id" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <!--<th>Project Code</th>-->
+            <th>Name</th>
+            <th>Phone</th>
+            <!--<th>Client Code</th>-->
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Dob</th>
+            <th>Start Date</th>
+            <th>Employee</th>
+            <th>Is Active</th>
+            <th>Food Cupon</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for row in results %}
+      <tr>
+          <!--<td>{{ row[1] }}</td>-->
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <!--<td>{{ row[4] }}</td>-->
+          <td>{{ row[8] }}</td>
+          <td>{{ row[7] }}</td>
+          <td>{{ row[9] }}</td>
+          <td>{{ row[10] }}</td>
+          <td>{{ row[12] }}</td>
+          <td>{{ row[13] }}</td>
+          <td>{{ row[20] }}</td>
+
+          <td style="">{% if session['superadmin'] %}<a title="Edit" href={{ url_for('__name__.editemp', e_id= row[0]) }}><span class="glyphicon glyphicon-edit"></span></a>&nbsp&nbsp&nbsp<a data-toggle="confirmation" data-btn-ok-label="&nbsp&nbspOk&nbsp&nbsp" data-btn-ok-class="btn-primary" data-btn-cancel-label="Cancel" data-btn-cancel-class="btn" data-title="Are you sure?" href={{ url_for('__name__.deleteemp', e_id= row[0]) }}><span class="glyphicon glyphicon-trash"></span></a>{% endif %}&nbsp&nbsp&nbsp<a title="More View" href={{ url_for('__name__.viewemp', e_id= row[0]) }}><span class="glyphicon glyphicon-new-window"></span></a></td>
+       </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    $('[data-toggle=confirmation]').confirmation({
+      rootSelector: '[data-toggle=confirmation]',
+  // other options
+    });    
+    </script>
+{% endblock %}

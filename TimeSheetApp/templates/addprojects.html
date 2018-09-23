@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section id="about">
+      <div class="container">
+        {% if result[0] %}
+        <h3>Edit Project ({{result[2]}})</h3>
+        {% else %}
+        <h3>Add Project</h3>
+        {% endif %}
+        <hr size="10" width="">
+        <form class="form-horizontal" method="post" action="/saveproject">
+          <input type="hidden" name="project_id" value="{{result[0]}}" />
+          <div class="row">
+          <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="pname">Project Name:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="pname" placeholder="Enter Project Name" name="pname" value="{{result[2]}}" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="pcode">Project Code:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="pcode" placeholder="Enter Project Code" name="pcode" value="{{result[1]}}" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="cname">Client Name:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" id="cname" placeholder="Enter Client Name" name="cname" value="{{result[3]}}" required>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="ccode">Client Code:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" id="ccode" placeholder="Enter Client Code" name="ccode" value="{{result[4]}}" required>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="pstatus">Status:</label>
+              <div class="col-sm-12">
+                <select id="pstatus" name="pstatus" class="form-control" required>
+                    <option {%if result[5] == 'Proposal' %} selected {% endif %} value="Proposal">Proposal</option>
+                    <option {%if result[5] == 'Not Started' %} selected {% endif %} value="Not Started">Not Started</option>
+                    <option {%if result[5] == 'Hold' %} selected {% endif %} value="Hold">Hold</option>
+                    <option {%if result[5] == 'Completed' %} selected {% endif %} value="Completed">Completed</option>
+                    <option {%if result[5] == 'Cancelled' %} selected {% endif %} value="Cancelled">Cancelled</option>
+                    <option {%if result[5] == 'Active' %} selected {% endif %} value="Active">Active</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="progress">Progress (in %):</label>
+              <div class="col-sm-12">
+                <input type="number" class="form-control" id="progress" placeholder="Enter Progress Value" name="progress" step=0.01 value="{{result[6]}}" >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="sdate">Start Date:</label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" id="sdate" placeholder="" name="sdate" {% if result[0] %} value={{result[7]}} {% endif %} >
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="edate">End Date:</label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" id="edate" placeholder="" name="edate" value={{result[8]}} >
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="bcontact">Biling Contact:</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="bcontact" placeholder="Enter Biling Person" name="bcontact" value="{{result[9]}}" required>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label col-sm-8" for="bemail">Bill To Email:</label>
+                <div class="col-sm-12">
+                  <input type="email" class="form-control" id="bemail" placeholder="Enter Bilable Email" name="bemail" value="{{result[10]}}" required>
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label" for="aboutp">About Project:</label>
+          <div class="">
+            <textarea class="form-control" id="aboutp" name="aboutp" rows="2" cols="250">{{result[11]}}</textarea>
+          </div>
+        </div>
+      </div>
+          <!--<div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+              </div>
+            </div>
+          </div>-->
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+{% endblock %}

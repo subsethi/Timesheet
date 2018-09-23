@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+
+{% block content %}
+   {% if session['user'] %}
+    <section id="about">
+      <div class="container">
+        <div id="successMessage" class="text-align">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+             {% for message in messages %}
+             <p class="match-color">{{ message }}</p>
+             {% endfor %}
+          {% endif %}
+        {% endwith %}
+        </div>
+        <h3>Time Sheet Entry ({{session['name']}})</h3>
+        <hr size="10" width="">
+        <form class="form-horizontal" method="post" action="/savetimesheet">
+          <input type="hidden" name="timesheet_id" value="{{resultedit[0]}}" />
+          <div class="row">
+          <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="eproject">Project Name:</label>
+            <div class="col-sm-12">
+              <select id="eproject" name="eproject"  class="form-control" required>
+                {% if resultedit %}
+                <option value="{{results[2]}},{{results[3]}}">{{results[2]}} ( {{results[3]}} )</option>
+                {% else %}
+                {% for row in results %}
+                <option  value="{{row[2]}},{{row[7]}}">{{row[2]}} ( {{row[7]}} )</option>
+                {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label col-sm-8" for="ehours">Hours:</label>
+            <div class="col-sm-12">
+              <input type="number" class="form-control" id="ehours" placeholder="Enter Hours" name="ehours" value="{{results[4]}}" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="tsdate">Start Date:</label>
+              <div class="col-sm-12">
+                <input type="date" class="form-control" id="tsdate" placeholder="" name="tsdate" value="{{results[6]}}" required>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label col-sm-8" for="tedate">End Date:</label>
+              <div class="col-sm-12">
+                <input type="date" class="form-control" id="tedate" placeholder="" name="tedate" value="{{results[7]}}" required>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label" for="tsummary">Summary:</label>
+          <div class="">
+            <textarea class="form-control" id="tsummary" name="tsummary" {% if view %}readonly{% endif %} rows="2" cols="250" required >{{results[8]}}</textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label" for="tactivity">Activity:</label>
+          <div class="">
+            <textarea class="form-control" id="tactivity" name="tactivity" {% if view %}readonly{% endif %} rows="4" cols="250" required >{{results[9]}}</textarea>
+          </div>
+        </div>
+      </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+     <section id="about">
+       <div class="container-custom">
+         <h3>Time Sheet Entry</h3>
+         <hr size="10" width="">
+         <div class="row">
+           <div class="col-md-10" style="padding-bottom:2%"></div>
+           <!--<div style="padding-bottom:2%" class="col-md-2"><div class="float-right"><a href="/" class="btn btn-primary">Add Entry</a></div></div>-->
+           <div class="col-md-12">
+           <table id="table_id" class="display" style="width:100%">
+     <thead>
+         <tr>
+             <th>Employee&nbspName</th>
+             <th>Project&nbspName</th>
+             <th>Hour</th>
+             <th>Start&nbspDate</th>
+             <th>End&nbspDate</th>
+             <th>summary</th>
+             <th>Activity</th>
+             {% if session['user'] %}
+             <th>Action</th>
+             {% endif %}
+         </tr>
+     </thead>
+     <tbody>
+       {% for row in results %}
+       <tr>
+           <td>{{ row[1] }}<!--({{row[5]}})--></td>
+           <td>{{ row[2] }} ({{row[3]}})</td>
+           <td>{{ row[4] }}</td>
+           <td>{{ row[6] }}</td>
+           <td>{{ row[7] }}</td>
+           <td>{{ row[8] }}</td>
+           <td>{{ row[9] }}</td>
+           {% if  session['user'] %}
+           <td style=""><a title="Edit" href={{ url_for('__name__.edituser', u_id= row[0]) }}><span class="glyphicon glyphicon-edit"></span></a>&nbsp&nbsp&nbsp<a title="Delete" href={{ url_for('__name__.deletetimesheet', ts_id= row[0]) }}><span class="glyphicon glyphicon-trash"></span></a></td>
+           {% endif %}
+        </tr>
+       {% endfor %}
+     </tbody>
+     <tfoot>
+       <tr>
+           <th>Employee&nbspName</th>
+           <th>Project&nbspName</th>
+           <th></th>
+           <th></th>
+           <th></th>
+           <th></th>
+           <th></th>
+       </tr>
+     </tfoot>
+ </table>
+           <!--<div class="col-lg-8 mx-auto">
+             <h2>About this page</h2>
+             <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+             <!--<ul>
+               <li>Clickable nav links that smooth scroll to page sections</li>
+               <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+               <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
+               <li>Minimal custom CSS so you are free to explore your own unique design options</li>
+             </ul>-->
+             <!--{% for row in results %}
+             <tr>
+                 <td>{{ row[0] }}</td>
+                 <td>{{ row[1] }}</td>
+                 <td>{{ row[2] }}</td>
+                 <td>{{ row[3] }}</td>
+              </tr>
+             {% endfor %}
+           </div>-->
+         </div>
+         </div>
+       </div>
+     </section>
+
+     <script>
+     $(document).ready( function () {
+       $('#table_id').DataTable( {
+           lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+           initComplete: function () {
+               this.api().columns([0, 1, 3]).every( function () {
+                   var column = this;
+                   var select = $('Show All');
+                   var select = $('<select><option value=""></option></select>')
+                       .appendTo( $(column.footer()).empty() )
+                       .on( 'change', function () {
+                           var val = $.fn.dataTable.util.escapeRegex(
+                               $(this).val()
+                           );
+
+                           column
+                               .search( val ? '^'+val+'$' : '', true, false )
+                               .draw();
+                       } );
+
+                   column.data().unique().sort().each( function ( d, j ) {
+                       select.append( '<option value="'+d+'">'+d+'</option>' )
+                   } );
+               } );
+           }
+       } );
+     } );
+     </script>
+    {% endif %}
+{% endblock %}

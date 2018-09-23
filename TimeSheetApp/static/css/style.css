@@ -1,0 +1,167 @@
+body {
+  /*padding-top: 80px;
+  padding-bottom: 40px;*/
+}
+
+.padding-login {
+  padding-top: 80px!important;
+  padding-bottom: 40px !important;
+}
+
+.padding-signup {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+.navvbar-custom {
+   padding: .2rem 0.5rem !important;
+}
+.py-3-custom {
+    padding-bottom: 0.3rem!important;
+    padding-top: 0.3rem!important;
+}
+.container-custom {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.custom-glyphicon-size{
+   font-size: 35px!important;
+}
+
+.jumbotron .h1, .jumbotron h2 {
+    font-size: 50px;
+}
+
+.text-align {
+text-align: center;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+
+.accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+.h3, h3 {
+    font-size: 1.30rem!important;
+}
+
+.h4, h4 {
+    font-size: 1.20rem!important;
+}
+
+tfoot {
+    display: table-header-group!important;
+}
+
+.sucess-color {
+  color: green;
+}
+
+.match-color {
+  color: #007bff;
+}
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-changepass {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-changepass .form-control:focus {
+  z-index: 2;
+}
+.form-changepass .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.button-space {
+  margin-top: 10px;
+}
+.buttom-fixed{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.navbar-brand {
+  display: inline-block;
+  padding-top: .3125rem !important;
+  padding-bottom: .3125rem !important;
+  margin-right: 1rem !important;
+  font-size: 1.25rem !important;
+  line-height: inherit !important;
+  white-space: nowrap !important;
+}

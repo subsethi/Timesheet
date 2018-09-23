@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <section id="about">
+      <div class="container-custom">
+        <h3>All Users</h3>
+        <hr size="10" width="">
+        <div class="row">
+          <div class="col-md-10" style="padding-bottom:2%"></div>
+          <!--<div style="padding-bottom:2%" class="col-md-2"><div class="float-right"><a href="#" class="btn btn-primary">Add User</a></div></div>-->
+          <div class="col-md-12">
+          <table id="table_id" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>User Type</th>
+            <th>Is Active</th>
+            {% if session['superadmin'] %}
+            <th>Action</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+      {% for row in results %}
+      <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          {% if row[4] == 'SA' %}
+          <td>Super Admin</td>
+          {% elif row[4] == 'A' %}
+          <td>Admin</td>
+          {% else %}
+          <td>User</td>
+          {% endif%}
+          <td>{{ row[5] }}</td>
+          {% if session['superadmin'] %}
+          <td style=""><a title="Edit" href={{ url_for('__name__.edituser', u_id= row[0]) }}><span class="glyphicon glyphicon-edit"></span></a>&nbsp&nbsp&nbsp<a data-toggle="confirmation" data-btn-ok-label="&nbsp&nbspOk&nbsp&nbsp" data-btn-ok-class="btn-primary" data-btn-cancel-label="Cancel" data-btn-cancel-class="btn" data-title="Are you sure?" href={{ url_for('__name__.deleteuser', u_id= row[0]) }}><span class="glyphicon glyphicon-trash"></span></a></td>
+          {% endif %}
+       </tr>
+      {% endfor %}
+    </tbody>
+</table>
+          <!--<div class="col-lg-8 mx-auto">
+            <h2>About this page</h2>
+            <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+            <!--<ul>
+              <li>Clickable nav links that smooth scroll to page sections</li>
+              <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+              <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
+              <li>Minimal custom CSS so you are free to explore your own unique design options</li>
+            </ul>-->
+            <!--{% for row in results %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+             </tr>
+            {% endfor %}
+          </div>-->
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    $('[data-toggle=confirmation]').confirmation({
+      rootSelector: '[data-toggle=confirmation]',
+  // other options
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout_first.html" %}
+{% block content %}
+
+    <div class="padding-login">
+    <div class="container">
+
+      <div class="jumbotron">
+        <div id="successMessage" class="text-align">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+             {% for message in messages %}
+             <p class="sucess-color">{{ message }}</p>
+             {% endfor %}
+          {% endif %}
+        {% endwith %}
+        </div>
+        <h2>Time Sheet App</h2>
+        <form action="/login" method="post" class="form-signin">
+        <!--<label for="inputName" class="sr-only">Name</label>
+        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>-->
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">login</button>
+        <a href="/showsignup">Sign Up</a> |
+        <a href="/showchangepass">Change Password</a>
+      </form>
+      </div>
+      <footer class="footer">
+        <p>Copyright &copy; Nichesoft 2018</p>
+      </footer>
+
+    </div>
+  </div>
+{% endblock %}
